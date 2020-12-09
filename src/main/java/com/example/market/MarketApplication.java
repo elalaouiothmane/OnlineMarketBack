@@ -25,18 +25,23 @@ public class MarketApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        categoryRepository.save(new Category(null,"Computers",null,null));
-        categoryRepository.save(new Category(null,"Electromenager",null,null));
-        categoryRepository.save(new Category(null,"Smart Phones",null,null));
+        categoryRepository.save(new Category(null,"Computers",null,null,null));
+        categoryRepository.save(new Category(null,"Electromenager",null,null,null));
+        categoryRepository.save(new Category(null,"Smart Phones",null,null,null));
         Random random = new Random();
         categoryRepository.findAll().forEach(c->{
-            Product p = new Product();
-            p.setName(RandomString.make(15));
-            p.setCurrentPrice(50 + random.nextInt(1000));
-            p.setAvailable(random.nextBoolean());
-            p.setPromotion(random.nextBoolean());
-            p.setCategory(c);
-            productRepository.save(p);
+            for (int i =0; i<15; i++){
+                Product p = new Product();
+                p.setName(RandomString.make(15));
+                p.setCurrentPrice(50 + random.nextInt(1000));
+                p.setSelected(random.nextBoolean());
+                p.setAvailable(random.nextBoolean());
+                p.setPromotion(random.nextBoolean());
+                p.setPhotoName("unknown.png");
+                p.setCategory(c);
+                productRepository.save(p);
+            }
+
         });
     }
 }
