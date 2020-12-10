@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 
 import java.util.Random;
 
@@ -18,6 +19,8 @@ public class MarketApplication implements CommandLineRunner {
     private ProductRepository productRepository;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private RepositoryRestConfiguration repositoryRestConfiguration;
 
     public static void main(String[] args) {
         SpringApplication.run(MarketApplication.class, args);
@@ -25,17 +28,19 @@ public class MarketApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+         repositoryRestConfiguration.exposeIdsFor(Product.class,Category.class);
         categoryRepository.save(new Category(null,"Computers",null,null,null));
         categoryRepository.save(new Category(null,"Electromenager",null,null,null));
         categoryRepository.save(new Category(null,"Smart Phones",null,null,null));
         Random random = new Random();
         categoryRepository.findAll().forEach(c->{
-            for (int i =0; i<15; i++){
+            for (int i =0; i<9; i++){
                 Product p = new Product();
                 p.setName(RandomString.make(15));
                 p.setCurrentPrice(50 + random.nextInt(1000));
                 p.setSelected(random.nextBoolean());
                 p.setAvailable(random.nextBoolean());
+                p.setDescription(RandomString.make(50));
                 p.setPromotion(random.nextBoolean());
                 p.setPhotoName("unknown.png");
                 p.setCategory(c);

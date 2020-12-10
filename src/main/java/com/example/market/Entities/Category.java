@@ -1,5 +1,6 @@
 package com.example.market.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -14,5 +15,6 @@ public class Category implements Serializable {
     private String description;
     private String photoCategory;
     @OneToMany(mappedBy = "category")
+    @JsonIgnore
     private Collection<Product> products;
 }

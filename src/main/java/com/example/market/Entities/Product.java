@@ -1,5 +1,6 @@
 package com.example.market.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,5 +21,6 @@ public class Product implements Serializable {
     private boolean available;
     private String photoName;
     @ManyToOne
+    @JsonIgnore
     private Category category;
 }
